@@ -1,0 +1,139 @@
+{% extends "layout.html" %}
+{% set active_page = "overview" %}
+
+{% block title %}
+    Overview
+{% endblock %}
+
+{% block main %}
+{% for user in session.user_lookup %}
+<div id="opacity">
+    <div class="container2">
+        <div class="row">
+            <div class="span" style="max-width: 100px">
+                <a data-toggle="tooltip" title="{{ user.name }}" href="https://twitter.com/{{ user.screen_name }}">
+                <img alt="profile image" src="{{ user.profile_image_url | replace('_normal', '_bigger') }}" style="margin-top: 3px; width: 80px; height: 80px; padding: 4px; border: solid 1px #ddd; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075); border-radius: 4px;">
+                </a>
+            </div>
+            <div class="span" style="max-width: 880px">
+                <div class="page-header" style="padding-bottom: 0px; margin-bottom: 17px; margin-top: 0px; border-bottom:1px solid #ddd">
+                    <h1 style="margin-top: 0px; margin-bottom: 8px">{{ user.name }} <small>@{{ user.screen_name }}</small></h1>
+                </div>
+                <p style="margin-bottom: 5px">{{ user.description }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="opacity">
+    <div class="container2">
+        <div class="row">
+            <div class="span" style="width: 980px">
+                <div class="page-header" style="text-align: left; padding-bottom: 0px; margin-bottom: 17px; margin-top: 0px; border-bottom:1px solid #ddd">
+                    <h1>Overview <small>Basic account info</small></h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span" style="width: 220px">
+                <h2 style="margin-top: 0px">Information</h2>
+                <p>The most important piece here is the join date. The longer they're on Twitter the better. Spam accounts and robots tend to get suspended after a couple of weeks.</p>
+            </div>
+            <dvi class="span" style="width: 700px">
+                <h6>ACCOUNT INFO</h6>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Name</td>
+                            <td>{{ user.name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Joined Twitter on</td>
+                            <td>{{ user.created_at }}</td>
+                        </tr>
+                        <tr>
+                            <td>Location</td>
+                            <td>{% if not user.location %} -- {% else %}{{ user.location }}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td>Timezone</td>
+                            <td>{{ user.time_zone }}</td>
+                        </tr>
+                        <tr>
+                            <td>Language</td>
+                            <td>{{ user.lang | capitalize() }} <span class="help-inline">language preference</span></td>
+                        </tr>
+                        <tr>
+                            <td>URL</td>
+                            <td><a href="{{ user.url }}">{{ user.url }}</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </dvi>
+            <div class="span" style="width: 220px">
+                <h2 style="margin-top: 0px">Tweet Stats</h2>
+                <p>More followers is good, but watch out for the follower-to-following ratio. A high ratio means that more people are following that person out of good will, not follow-back.</p>
+            </div>
+            <dvi class="span" style="width: 700px">
+                <h6>STATS AS FOLLOWS</h6>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Tweets</td>
+                            <td>{{ user.statuses_count }}</td>
+                        </tr>
+                        <tr>
+                            <td>Followers</td>
+                            <td>{{ user.followers_count }}</td>
+                        </tr>
+                        <tr>
+                            <td>Following</td>
+                            <td>{{ user.friends_count }}</td>
+                        </tr>
+                        <tr>
+                            <td>Followers ratio</td>
+                            <td>
+                            {% if user.friends_count == 0 %}
+                            {{ user.followers_count }} <span class="help-inline">followers per following</span>
+                            {% else %}
+                            {{ "%.2f" | format(user.followers_count / user.friends_count) }} <span class="help-inline">followers per following</span>
+                            {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Listed</td>
+                            <td>{{ user.listed_count }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </dvi>
+        </div>
+    </div>
+</div>
+<div id="opacity">
+    <div class="container2">
+        <div class="row">
+            <div class="span" style="width: 980px">
+                <div class="page-header" style="text-align: left; padding-bottom: 0px; margin-bottom: 17px; margin-top: 0px; border-bottom:1px solid #ddd">
+                    <h1>Time <small>Are they a robot?</small></h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span" style="width: 220px">
+                <h2 style="margin-top: 0px">Information</h2>
+                <p>
+                    This chart illustrates the time when @{{ user.screen_name }} is the most active. You should pay attention to how the tweets
+                    are spread across the spectrum. If they are spread evenly, there is a very high chance that tweets are being scheduled
+                    or that this account has a bot running.
+                </p>
+            </div>
+            <dvi class="span" style="width: 700px">
+                <h6>WHEN DO THEY TWEET?</h6>
+                {{ chart | safe }}
+                <p><span class="help-inline">Be careful about the timezone! This chart is shown in UTC +0. <strong>UTC time now: {{ time }}</strong></span></p>
+            </dvi>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

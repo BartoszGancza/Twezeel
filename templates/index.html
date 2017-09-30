@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+{% set active_page = "index" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+{% if session.screen_name %}
+<div class="col-md-8">
+    <div id="opacity" style="padding-left: 30px; padding-right: 30px">
+        <div class="page-header" style="text-align: left; padding-bottom: 0px; margin-bottom: 17px; margin-top: 0px; border-bottom:1px solid #ddd">
+            <h3>About this site</h3>
+        </div>
+        <p>Hi there {{ session.screen_name.name }}!</p>
+        <p>This site is made for the pure purpose of being a portfolio project (as well as being the final project for
+        one of the programming courses I took). The full code is available at GitHub, so please feel free to fork to your hearts
+        content and use this as a base for creating improved version of this application! :)</p>
+        <p>This smal website let's you check out any (non-protected) user on Twitter giving you publicly available details
+        on them (like their timezone, location, number of tweets, followers, people being followed by them, followers to following ratio,
+        etc.), and shows you their activity times. It also presents you with your most recent tweets, mentions and Direct Messages received),
+        let's you post a tweet directly from the website (without having to access Twitter separately) and shows you your 30 newest followers.</p>
+        <p>I hope you'll enjoy the experience!</p>
+    </div>
+    <div id="opacity">
+        <div class="page-header" style="text-align: left; padding-bottom: 0px; margin-left: 20px; margin-right: 20px; margin-bottom: 17px; margin-top: 0px; border-bottom:1px solid #ddd">
+            <h3>Search for a user:</h3>
+        </div>
+        <p>Remember to type the screen name without the "@" symbol!</p>
+        <form class="form-inline" method="post" action="{{ url_for('overview') }}">
+            <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">@</span>
+            <input autocomplete="off" autofocus class="form-control" name="who" placeholder="Screen Name" type="text"/>
+            </div>
+            <input class="btn btn-info" type="submit" value="Search"/>
+        </form>
+    </div>
+    <div id="opacity">
+        <div class="page-header" style="text-align: left; padding-bottom: 0px; margin-left: 20px; margin-right: 20px; margin-bottom: 17px; margin-top: 0px; border-bottom:1px solid #ddd">
+            <h3>Your newest followers <small>(30 of them)</small></h3>
+        </div>
+        <div id="followers">
+        </div>
+    </div>
+</div>
+<div class="col-md-4">
+    <div id="opacity" style="width: 100%; margin-right: 0px; margin-left: 0px; float: right">
+        <div class="page-header" style="text-align: left; padding-bottom: 0px; margin-left: 20px; margin-right: 20px; margin-bottom: 17px; margin-top: 0px; border-bottom:1px solid #ddd">
+            <h3>Tweet something!</h3>
+        </div>
+        <form method="post" action="{{ url_for('tweet') }}">
+            <textarea name="tweet" id="twemoji-picker"></textarea>
+            <div style="height: 20px; background-color: #fff; border-top: 1px; border-radius: 0px 0px 3px 3px; text-align: right; padding-right: 5px">
+                <span id="charNum"></span>
+            </div>
+            <input class="btn btn-info" type="submit" value="Tweet!" style="float: right"></button>
+        </form>
+    </div>
+    <ul class="nav nav-tabs" style="margin-bottom: 5px">
+        <li class="active"><a data-toggle="tab" href="#recent" id="recent_prep">Most recent</a></li>
+        <li><a data-toggle="tab" href="#mentions" id="mentions_prep">Mentions</a></li>
+        <li><a data-toggle="tab" href="#dm" id="dm_prep">Direct Message</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="recent" class="tab-pane fade in active">
+        </div>
+        <div id="mentions" class="tab-pane fade">
+        </div>
+        <div id="dm" class="tab-pane fade">
+        </div>
+    </div>
+</div>
+{% else %}
+<form action="{{ url_for('index') }}" method="post">
+    <fieldset>
+        <div class="form-group">
+            <input type="submit" class="btn btn-info" class="btn btn-default" value="Log In With Twitter"></button>
+        </div>
+    </fieldset>
+</form>
+{% endif %}
+{% endblock %}

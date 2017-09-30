@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Ubuntu+Condensed|Poiret+One">
+    <link rel="shortcut icon" href="" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta -->
+    <meta charset="utf-8"/>
+    <meta content="initial-scale=1, width=device-width" name="viewport"/>
+    <!-- documentation at http://getbootstrap.com/, alternative themes at https://www.bootstrapcdn.com/bootswatch/ -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/slate/bootstrap.min.css" rel="stylesheet" integrity="sha384-RpX8okQqCyUNG7PlOYNybyJXYTtGQH+7rIKiVvg1DLg6jahLEk47VvpUyS+E2/uJ" crossorigin="anonymous"/>
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    {{ JSGlue.include() }}
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+    <!-- Emoji picker thanks to/documentation at https://github.com/xLs51/Twemoji-Picker -->
+    <link rel="stylesheet" href="static/twemoji-picker.css">
+    <script src="static/twemoji-picker.js"></script>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    {% if session.screen_name %}
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">
+                        <img id="user_image" src="{{ session.screen_name.profile_image_url | replace('_normal', '_bigger') }}" style="width: 48px; border-radius: 60px; right-margin: 5px">
+                        @{{ session.screen_name.screen_name }}
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <p><h3 style="margin-top: 0px">Bio:</h3></p>
+                    <p>{{ session.screen_name.description }}</p>
+                    <p><h3>Account details:</h3></p>
+                    <table>
+                    <tbody>
+                        <tr>
+                            <td>Name</td>
+                            <td>{{ session.screen_name.name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Joined Twitter on</td>
+                            <td>{{ session.screen_name.created_at }}</td>
+                        </tr>
+                        <tr>
+                            <td>Location</td>
+                            <td>{% if not session.screen_name.location %} -- {% else %}{{ session.screen_name.location }}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td>Timezone</td>
+                            <td>{{ session.screen_name.time_zone }}</td>
+                        </tr>
+                        <tr>
+                            <td>Language</td>
+                            <td>{{ session.screen_name.lang | capitalize() }} <span class="help-inline">language preference</span></td>
+                        </tr>
+                        <tr>
+                            <td>URL</td>
+                            <td><a href="{{ session.screen_name.url }}">{{ session.screen_name.url }}</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-info" role="button" href="https://twitter.com/{{ session.screen_name.screen_name }}">Go to Twitter Profile</a>
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <div class="container">
+        <nav class="navbar navbar-default" id="navbar1">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse" type="button">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{{ url_for('index') }}">Twezeel!</a>
+                </div>
+                <div class="collapse navbar-collapse" id="navbar">
+                {% if session.screen_name %}
+                    <ul class="nav navbar-nav ">
+                        <li>
+                            <form class="form-inline" method="post" action="{{ url_for('overview') }}" style="margin-left: 5px; margin-top: 5px">
+                                <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1">@</span>
+                                <input class="form-control" type="text" name="who" placeholder="Screen Name">
+                                </div>
+                                <input class="btn btn-info" type="submit" value="Search"/>
+                            </form>
+                        </li>
+                    </ul>
+                    <div class="nav navbar-nav navbar-right">
+                        <p class="navbar-text">Followers: <span class="counter">{{session.screen_name.followers_count}}</span> Following: <span class="counter">{{session.screen_name.friends_count}}</span></p>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="MyNavbar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="padding-top: 1px; padding-bottom: 1px">
+                            <img id="user_image" src="{{ session.screen_name.profile_image_url }}" style="max-height: 50px; padding-right: 5px">@{{ session.screen_name.screen_name }} <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="MyNavbar" style="text-align: center; padding: 5px">
+                                <li><a class="dropdown-item" data-toggle="modal" href="#myModal">View Profile</a></li>
+                                <hr style="margin-top: 5px; margin-bottom: 5px">
+                                <li><a class="dropdown-item" href="{{ url_for('logout') }}">Log Out</a></li>
+                            </ul>
+                        </li>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </nav>
+        {% if get_flashed_messages() %}
+        <header>
+            <div class="alert alert-info" role="alert">
+                {{ get_flashed_messages() | join(" ") }}
+            </div>
+        </header>
+        {% endif %}
+        <main>
+            {% block main %}{% endblock %}
+        </main>
+    </div>
+    <div style="height: 30px; margin-top: 10px">
+        <footer class="container-fluid" id="footer">
+        <p style="padding-top: 5px; margin-bottom: 0px;">Project design by Bartosz Gańcza</p>
+        </footer>
+    </div>
+</body>
+</html>

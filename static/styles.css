@@ -1,0 +1,236 @@
+html
+{
+    position: relative;
+    min-height: 100%;
+}
+
+.container
+{
+    /* center contents */
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.container2
+{
+    /* center contents */
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    max-width: 1000px;
+    margin: 0px;
+}
+
+.row
+{
+    margin: 0px;
+    text-overflow: ellipsis;
+}
+
+.row>[class*="span"]
+{
+    display:inline;
+    float: left;
+    margin-left:20px;
+    text-align:left
+}
+
+#footer
+{
+    height: 30px;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    display: inline-block;
+    text-align: center;
+    background: linear-gradient(-15deg, rgba(193, 194, 188, 0.1), rgba(255, 255, 255, 0.2), rgba(193, 194, 188, 0.1));
+}
+
+#recent,
+#mentions,
+#dm
+{
+    max-height: 410px;
+    overflow-y: scroll;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+#tweet_input
+{
+    width: 100%;
+    height: 150px;
+    border-radius: 10px;
+    vertical-align: middle;
+    resize: none;
+    border-width: 1px;
+}
+
+#opacity /* main div look (glasslike squares) */
+{
+    background: linear-gradient(-15deg, rgba(193, 194, 188, 0.1), rgba(255, 255, 255, 0.2), rgba(193, 194, 188, 0.1));
+    margin: 15px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+body
+{
+    background-image:url(background.jpg);
+    background-attachment: fixed;
+}
+
+main .form-control,
+.form-inline .form-control
+{
+    /* center form controls */
+    display: inline-block;
+    /* override Bootstrap's 100% width for form controls */
+    width: auto;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 110%;
+    color: black;
+}
+
+main img
+{
+    /* constrain images on small screens */
+    max-width: 100%;
+}
+
+/******************************************/
+/*             Modal                      */
+/******************************************/
+
+.modal-header
+{
+    border-radius: 5px 5px 0px 0px;
+}
+
+.modal-content
+{
+    background: linear-gradient(-15deg, rgba(193, 194, 188, 0.5), rgba(255, 255, 255, 0.8), rgba(193, 194, 188, 0.5));
+    color: black;
+}
+
+.modal-content td
+{
+    border-top:1px solid black;
+}
+
+.nav-tabs>li.active>a,
+.nav-tabs>li.active>a:hover,
+.nav-tabs>li.active>a:focus
+{
+    background: linear-gradient(-15deg, rgba(193, 194, 188, 0.1), rgba(255, 255, 255, 0.2), rgba(193, 194, 188, 0.1));
+}
+
+/******************************************/
+/*             Table styles               */
+/******************************************/
+
+main td
+{
+    /* left-align tables' cells */
+    text-align: left;
+}
+
+table, th, td
+{
+    border: 0px;
+}
+
+table
+{
+    width: 100%;
+    margin-bottom: 18px;
+    background-color: rgba(0,0,0,0);
+}
+
+td
+{
+    padding: 5px 5px 4px;
+    vertical-align:top;
+    border-top:1px solid #ddd;
+}
+
+.followers_table td
+{
+    border-top: 0px;
+    padding: 2px 2px 2px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.followers_table
+{
+    margin-bottom: 0px;
+}
+
+/******************************************/
+/*                Buttons                 */
+/******************************************/
+
+.btn-default
+{
+    box-shadow: 3px 3px 3px black;
+    font-family: 'Ubuntu Condensed', sans-serif;
+    font-size: 120%;
+}
+
+/******************************************/
+/*                Navbar                  */
+/******************************************/
+
+#navbar1
+{
+    background: linear-gradient(rgba(193, 194, 188, 0.1), rgba(255, 255, 255, 0.2), rgba(193, 194, 188, 0.1));
+}
+
+.navbar-text
+{
+    text-overflow: ellipsis;
+    max-width: 100px;
+    margin-top: 5px;
+    margin-bottom: auto;
+    text-align: left;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.navbar-collapse.collapse.in .navbar-text
+{
+    text-overflow: ellipsis;
+    margin-top: auto;
+    margin-bottom: 10px;
+    text-align: center;
+    display: inline-block;
+}
+
+.counter
+{
+    font-weight: bold;
+    color: #70ad2e;
+
+}
+
+/******************************************/
+/*                Fonts                   */
+/******************************************/
+
+.help-inline
+{
+    color: grey;
+}
+
+.title_text
+{
+    text-align: center;
+    font-size: 300%;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    font-family: 'Ubuntu Condensed', sans-serif;
+}
