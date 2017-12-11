@@ -151,19 +151,19 @@ $(document).ready(function() {
     });
 
     $(".twemoji-textarea").keyup(function () {
-        var max = 140;
+        var max = 280;
         var len = $("#twemoji-picker").val().length;
         if (len > max)
         {
             $("#charNum").css("color", "red");
             var char = max - len;
-            $("#charNum").text(char + "/140");
+            $("#charNum").text(char + "/280");
         }
         else
         {
             $("#charNum").css("color", "#c8c8c8");
             char = max - len;
-            $("#charNum").text(char + "/140");
+            $("#charNum").text(char + "/280");
         }
     });
 });
